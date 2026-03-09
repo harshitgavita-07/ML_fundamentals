@@ -125,8 +125,8 @@ pip install numpy pandas matplotlib scikit-learn jupyter
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/REPO_NAME.git
-cd REPO_NAME
+git clone https://github.com/harshitgavita-07/ML_fundamentals.git
+cd ML_fundamentals 
 ```
 
 Start Jupyter:
