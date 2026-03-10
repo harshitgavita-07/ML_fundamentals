@@ -1,0 +1,33 @@
+name: 🔥 Daily Streak Keeper
+
+on:
+  schedule:
+    - cron: '30 14 * * *'  # 8:00 PM IST daily
+  workflow_dispatch:        # Manual trigger anytime
+
+jobs:
+  keep-streak:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update streak log
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          DAY=$(date +%A)
+          echo "" >> STREAK_LOG.md
+          echo "### $DATE ($DAY)" >> STREAK_LOG.md
+          echo "- Active: ✅" >> STREAK_LOG.md
+          echo "- Notes: Daily ML study / contributions" >> STREAK_LOG.md
+
+      - name: Commit
+        run: |
+          git config user.name "streak-bot"
+          git config user.email "streak@github.com"
+          git add STREAK_LOG.md
+          git commit -m "streak: $(date +%Y-%m-%d) ✅" || echo "Nothing to commit"
+          git push
