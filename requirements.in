@@ -1,0 +1,9 @@
+# Tested with Python 3.12.14. Compile to requirements.txt for a pinned environment.
+numpy==2.5.3
+pandas==3.0.6
+matplotlib==3.11.2
+scikit-learn==1.9.1
+nbclient==0.11.0
+nbformat==5.11.1
+ipykernel==7.4.0
+jupyterlab
