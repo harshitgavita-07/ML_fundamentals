@@ -1,0 +1,25 @@
+name: Notebook checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notebooks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+          cache: pip
+      - name: Install tested notebook environment
+        run: python -m pip install -r requirements.txt
+      - name: Execute all notebooks
+        run: python scripts/check_notebooks.py
