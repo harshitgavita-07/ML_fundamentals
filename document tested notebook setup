@@ -58,29 +58,13 @@ The notebooks walk through important Machine Learning topics starting from the b
 
 # 📂 Repository Structure
 
-```
-ML-full-foundations/
-
-├── 01_intro_to_ml.ipynb
-├── 02_supervised_learning.ipynb
-├── 03_linear_regression.ipynb
-├── 04_gradient_descent.ipynb
-├── 05_locally_weighted_linear_regression.ipynb
-├── 06_logistic_regression.ipynb
-├── 07_knn_algorithm.ipynb
-├── 08_support_vector_machine.ipynb
-├── 09_naive_bayes_classifier.ipynb
-├── 10_decision_trees.ipynb
-├── 11_random_forest.ipynb
-├── 12_boosting_algorithms.ipynb
-├── 13_neural_networks.ipynb
-├── 14_activation_functions.ipynb
-├── 15_backpropagation.ipynb
-├── 16_loss_functions.ipynb
-├── 17_optimization_algorithms.ipynb
-├── 18_k_means_clustering.ipynb
-├── 19_dimensionality_reduction_pca.ipynb
-
+```text
+ML_fundamentals/
+├── Notebooks/              # 19 learning notebooks; keep their existing filenames
+├── scripts/check_notebooks.py
+├── requirements.in         # Direct dependencies
+├── requirements.txt        # Pinned notebook and JupyterLab environment
+├── .github/workflows/daily-streak.yml  # Notebook checks, not streak commits
 └── README.md
 ```
 
@@ -108,34 +92,52 @@ This helps avoid treating ML algorithms as **black boxes**.
 
 ---
 
-# ⚙️ Requirements
+# Setup and running
 
-Python **3.10+**
-
-Install the basic dependencies:
-
-```bash
-pip install numpy pandas matplotlib scikit-learn jupyter
-```
-
----
-
-# ▶️ Running the Notebooks
-
-Clone the repository:
+The pinned environment is tested with **Python 3.12.14**. Other Python versions
+are not covered by this check.
 
 ```bash
 git clone https://github.com/harshitgavita-07/ML_fundamentals.git
-cd ML_fundamentals 
+cd ML_fundamentals
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+python -m pip install -r requirements.txt
 ```
 
-Start Jupyter:
+Open the notebooks interactively:
 
 ```bash
-jupyter notebook
+python -m jupyterlab
 ```
 
-Then open any notebook and explore.
+Or execute all 19 notebooks in fresh kernels:
+
+```bash
+python scripts/check_notebooks.py
+```
+
+The checker prints a result for each notebook and exits with a nonzero status
+if any notebook fails. It executes in memory and does not overwrite notebook
+outputs or commit files. Execution checks catch runtime errors; they do not
+prove that every explanation or model is correct.
+
+The linear-regression notebook downloads the California housing dataset through
+scikit-learn on first use. An internet connection is needed for that download;
+later runs can use scikit-learn's local data cache. The other notebooks use
+bundled scikit-learn datasets or generated examples.
+
+## Automated checks
+
+Pushes to main, pull requests and manual workflow runs execute the same checker
+on Python 3.12.14. The former daily streak-commit workflow has been replaced:
+checks no longer append to `STREAK_LOG.md` or make automated activity commits.
+The old log remains as history. The separate snake-graphic workflow is unchanged.
+
+`requirements.in` records the direct dependencies, and `requirements.txt` pins
+the resolved environment. After a dependency update, regenerate the lock with
+`uv pip compile requirements.in --python 3.12 --output-file requirements.txt`,
+then execute all notebooks before committing it.
 
 ---
 
